@@ -3,6 +3,9 @@ import CodeEditor from "../CodeEditor";
 import Preview from "../Preview";
 
 import bundle from "../../bundler";
+import Resizable from "../Resizable";
+
+import styles from "./CodeCell.module.scss";
 
 const CodeCell = () => {
   const [input, setInput] = useState("");
@@ -19,15 +22,14 @@ const CodeCell = () => {
   }, []);
 
   return (
-    <div>
-      <CodeEditor initialValue="const a = 1;" onChange={onChangeHandler} />
-      <div>
-        <button type="button" onClick={onClickHandler}>
-          Submit
-        </button>
+    <Resizable direction="vertical">
+      <div className={styles["code-cell"]}>
+        <Resizable direction="horizontal">
+          <CodeEditor initialValue="const a = 1;" onChange={onChangeHandler} />
+        </Resizable>
+        <Preview code={code} />
       </div>
-      <Preview code={code} />
-    </div>
+    </Resizable>
   );
 };
 

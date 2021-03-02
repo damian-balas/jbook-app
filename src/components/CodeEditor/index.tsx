@@ -94,7 +94,6 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
         options={options}
         theme="dark"
         language="javascript"
-        height="500px"
       />
     </div>
   );
