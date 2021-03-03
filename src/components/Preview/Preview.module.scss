@@ -5,7 +5,7 @@
   overflow: hidden;
 }
 
-.preview-wrapper::after {
+:global(.react-draggable-transparent-selection) .preview-wrapper::after {
   content: "";
   position: absolute;
   top: 0;
