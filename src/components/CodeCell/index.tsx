@@ -10,12 +10,14 @@ import styles from "./CodeCell.module.scss";
 const CodeCell = () => {
   const [input, setInput] = useState("");
   const [code, setCode] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const timer = setTimeout(async () => {
       const output = await bundle(input);
 
-      setCode(output);
+      setCode(output.code);
+      setError(output.err);
     }, 1000);
 
     return () => {
@@ -33,7 +35,7 @@ const CodeCell = () => {
         <Resizable direction="horizontal">
           <CodeEditor initialValue="const a = 1;" onChange={onChangeHandler} />
         </Resizable>
-        <Preview code={code} />
+        <Preview code={code} bundleErrorMessage={error} />
       </div>
     </Resizable>
   );

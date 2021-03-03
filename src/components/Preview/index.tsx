@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import styles from "./Preview.module.scss";
 interface PreviewProps {
   code: string;
+  bundleErrorMessage: string;
 }
 
 const html = `
@@ -10,14 +11,24 @@ const html = `
       <body>
         <div id="root"></div>
         <script>
+          const handleError = (err) => {
+            const root = document.querySelector('#root');
+            document.body.style.margin = '0';
+            root.innerHTML = '<div style="margin: 12px;"><pre style="line-height: 1.4;white-space: pre-wrap; padding: 0; margin: 0; background: none; color: darkred; font-family: sans-serif; font-weight: bold; font-size: 20px;">' + err + '</pre></div>'
+            
+            console.error(err);
+          }
+
+          window.addEventListener('error', (event) => {
+            event.preventDefault();
+            handleError(event.error);
+          });
+
           window.addEventListener('message', (event) => {
             try {
               eval(event.data);
             } catch (err) {
-              const root = document.querySelector('#root');
-              root.innerHTML = '<div style="color: red;"><h4>Runtime Error</h4>' + err + '</div>'
-              
-              console.error(err);
+              handleError(err);
             }
           }, false);
       </script>
@@ -25,7 +36,7 @@ const html = `
     </html>
   `;
 
-const Preview: React.FC<PreviewProps> = ({ code }) => {
+const Preview: React.FC<PreviewProps> = ({ code, bundleErrorMessage }) => {
   const iframe = useRef<HTMLIFrameElement | null>(null);
 
   useEffect(() => {
@@ -49,6 +60,11 @@ const Preview: React.FC<PreviewProps> = ({ code }) => {
         srcDoc={html}
         title="preview"
       />
+      {!!bundleErrorMessage && (
+        <div className={styles["preview-error-wrapper"]}>
+          <pre className={styles["preview-error"]}>{bundleErrorMessage}</pre>
+        </div>
+      )}
     </div>
   );
 };
