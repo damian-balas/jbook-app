@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import CodeEditor from "../CodeEditor";
 import Preview from "../Preview";
 
@@ -11,11 +11,17 @@ const CodeCell = () => {
   const [input, setInput] = useState("");
   const [code, setCode] = useState("");
 
-  const onClickHandler = async () => {
-    const output = await bundle(input);
+  useEffect(() => {
+    const timer = setTimeout(async () => {
+      const output = await bundle(input);
 
-    setCode(output);
-  };
+      setCode(output);
+    }, 1000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [input]);
 
   const onChangeHandler = useCallback((value: string) => {
     setInput(value);
