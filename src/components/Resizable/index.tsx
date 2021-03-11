@@ -3,9 +3,9 @@ import { ResizableBox, ResizableBoxProps } from "react-resizable";
 import debounce from "../../utils/debounce";
 import "./Resizable.scss";
 
-interface ResizableProps {
+type ResizableProps = {
   direction: "horizontal" | "vertical";
-}
+};
 
 const Resizable: React.FC<ResizableProps> = ({ direction, children }) => {
   let resizableProps: ResizableBoxProps;

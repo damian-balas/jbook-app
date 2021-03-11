@@ -1,9 +1,10 @@
 import { useEffect, useRef } from "react";
 import styles from "./Preview.module.scss";
-interface PreviewProps {
+
+type PreviewProps = {
   code: string;
   bundleErrorMessage: string;
-}
+};
 
 const html = `
     <html>

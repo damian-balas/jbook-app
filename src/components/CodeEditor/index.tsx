@@ -24,10 +24,10 @@ const options: EditorProps["options"] = {
   automaticLayout: true,
 };
 
-interface CodeEditorProps {
+type CodeEditorProps = {
   initialValue: string;
   onChange(value: string): void;
-}
+};
 
 const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
   const monacoEditorRef = useRef<editor.editor.IStandaloneCodeEditor | null>(

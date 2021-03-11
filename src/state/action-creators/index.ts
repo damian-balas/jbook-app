@@ -1,6 +1,5 @@
 import { CellTypes } from "./../cell";
 import {
-  Action,
   Direction,
   UpdateCellAction,
   MoveCellAction,
