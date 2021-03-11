@@ -1,6 +1,6 @@
 type IconButtonProps = {
   iconClassName: string;
-  onClick: () => void;
+  onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 };
 
 const IconButton: React.FC<IconButtonProps> = ({ onClick, iconClassName }) => {
