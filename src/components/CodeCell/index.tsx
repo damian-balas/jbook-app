@@ -6,15 +6,19 @@ import bundle from "../../bundler";
 import Resizable from "../Resizable";
 
 import styles from "./CodeCell.module.scss";
+import { Cell } from "../../state";
+import { useActions } from "../../hooks/useActions";
 
-const CodeCell = () => {
-  const [input, setInput] = useState("");
+type CodeCellProps = Cell;
+
+const CodeCell: React.FC<CodeCellProps> = ({ content, id, type }) => {
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
+  const { updateCell } = useActions();
 
   useEffect(() => {
     const timer = setTimeout(async () => {
-      const output = await bundle(input);
+      const output = await bundle(content);
 
       setCode(output.code);
       setError(output.err);
@@ -23,17 +27,20 @@ const CodeCell = () => {
     return () => {
       clearTimeout(timer);
     };
-  }, [input]);
+  }, [content]);
 
-  const onChangeHandler = useCallback((value: string) => {
-    setInput(value);
-  }, []);
+  const onChangeHandler = useCallback(
+    (value: string) => {
+      updateCell(id, value);
+    },
+    [updateCell, id],
+  );
 
   return (
     <Resizable direction="vertical">
       <div className={styles["code-cell"]}>
         <Resizable direction="horizontal">
-          <CodeEditor initialValue="const a = 1;" onChange={onChangeHandler} />
+          <CodeEditor initialValue={content} onChange={onChangeHandler} />
         </Resizable>
         <Preview code={code} bundleErrorMessage={error} />
       </div>

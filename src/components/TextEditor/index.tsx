@@ -1,19 +1,26 @@
 import MDEditor, { MDEditorProps } from "@uiw/react-md-editor";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useActions } from "../../hooks/useActions";
+import { Cell } from "../../state";
 import styles from "./TextEditor.module.scss";
 
 type RequiredMDEditorProps = Required<MDEditorProps>;
 
-const TextEditor: React.FC = () => {
+type TextEditorProps = Cell;
+
+const TextEditor: React.FC<TextEditorProps> = ({ id, content, type }) => {
   const [editing, setEditing] = useState(false);
-  const [value, setValue] = useState("# Header");
   const editorWrapperRef = useRef<HTMLDivElement | null>(null);
+  const { updateCell } = useActions();
 
   const handleEditorValueChange = useCallback<
     RequiredMDEditorProps["onChange"]
-  >((val) => {
-    setValue(val || "");
-  }, []);
+  >(
+    (val) => {
+      updateCell(id, val || "");
+    },
+    [updateCell, id],
+  );
 
   useEffect(() => {
     const listener = (event: MouseEvent) => {
@@ -38,7 +45,7 @@ const TextEditor: React.FC = () => {
   if (editing) {
     return (
       <div className={styles["text-editor"]} ref={editorWrapperRef}>
-        <MDEditor value={value} onChange={handleEditorValueChange} />
+        <MDEditor value={content} onChange={handleEditorValueChange} />
       </div>
     );
   }
@@ -48,7 +55,10 @@ const TextEditor: React.FC = () => {
       className={`card ${styles["text-editor"]}`}
       onClick={() => setEditing(true)}
     >
-      <MDEditor.Markdown className="card-content" source={value} />
+      <MDEditor.Markdown
+        className="card-content"
+        source={content || "Click to edit..."}
+      />
     </div>
   );
 };
