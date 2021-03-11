@@ -1,3 +1,4 @@
+import { ACTION_TYPE } from "./action-types/index";
 import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import reducers from "./reducers";
@@ -10,3 +11,35 @@ export const store = createStore(
   {},
   composeEnhancers(applyMiddleware(thunk)),
 );
+
+store.dispatch({
+  type: ACTION_TYPE.INSERT_CELL_BEFORE,
+  payload: {
+    id: null,
+    type: "code",
+  },
+});
+
+store.dispatch({
+  type: ACTION_TYPE.INSERT_CELL_BEFORE,
+  payload: {
+    id: null,
+    type: "text",
+  },
+});
+
+store.dispatch({
+  type: ACTION_TYPE.INSERT_CELL_BEFORE,
+  payload: {
+    id: null,
+    type: "code",
+  },
+});
+
+store.dispatch({
+  type: ACTION_TYPE.INSERT_CELL_BEFORE,
+  payload: {
+    id: null,
+    type: "text",
+  },
+});
