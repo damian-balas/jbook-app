@@ -13,7 +13,7 @@ export const store = createStore(
 );
 
 store.dispatch({
-  type: ACTION_TYPE.INSERT_CELL_BEFORE,
+  type: ACTION_TYPE.INSERT_CELL_AFTER,
   payload: {
     id: null,
     type: "code",
@@ -21,7 +21,7 @@ store.dispatch({
 });
 
 store.dispatch({
-  type: ACTION_TYPE.INSERT_CELL_BEFORE,
+  type: ACTION_TYPE.INSERT_CELL_AFTER,
   payload: {
     id: null,
     type: "text",
@@ -29,7 +29,7 @@ store.dispatch({
 });
 
 store.dispatch({
-  type: ACTION_TYPE.INSERT_CELL_BEFORE,
+  type: ACTION_TYPE.INSERT_CELL_AFTER,
   payload: {
     id: null,
     type: "code",
@@ -37,7 +37,7 @@ store.dispatch({
 });
 
 store.dispatch({
-  type: ACTION_TYPE.INSERT_CELL_BEFORE,
+  type: ACTION_TYPE.INSERT_CELL_AFTER,
   payload: {
     id: null,
     type: "text",

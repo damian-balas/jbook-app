@@ -16,8 +16,8 @@ export type DeleteCellAction = {
   payload: string;
 };
 
-export type InsertCellBeforeAction = {
-  type: ACTION_TYPE.INSERT_CELL_BEFORE;
+export type InsertCellAfterAction = {
+  type: ACTION_TYPE.INSERT_CELL_AFTER;
   payload: {
     id: string | null;
     type: CellTypes;
@@ -35,5 +35,5 @@ export type UpdateCellAction = {
 export type Action =
   | MoveCellAction
   | DeleteCellAction
-  | InsertCellBeforeAction
+  | InsertCellAfterAction
   | UpdateCellAction;
