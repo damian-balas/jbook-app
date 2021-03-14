@@ -12,12 +12,12 @@ const html = `
       <body>
         <div id="root"></div>
         <script>
-          const handleError = (err) => {
+          const handleError = (error) => {
             const root = document.querySelector('#root');
             document.body.style.margin = '0';
-            root.innerHTML = '<div style="margin: 12px;"><pre style="line-height: 1.4;white-space: pre-wrap; padding: 0; margin: 0; background: none; color: darkred; font-family: sans-serif; font-weight: bold; font-size: 20px;">' + err + '</pre></div>'
+            root.innerHTML = '<div style="margin: 12px;"><pre style="line-height: 1.4;white-space: pre-wrap; padding: 0; margin: 0; background: none; color: darkred; font-family: sans-serif; font-weight: bold; font-size: 20px;">' + error + '</pre></div>'
             
-            console.error(err);
+            console.error(error);
           }
 
           window.addEventListener('error', (event) => {
@@ -28,8 +28,8 @@ const html = `
           window.addEventListener('message', (event) => {
             try {
               eval(event.data);
-            } catch (err) {
-              handleError(err);
+            } catch (error) {
+              handleError(error);
             }
           }, false);
       </script>

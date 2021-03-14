@@ -21,7 +21,7 @@ const CodeCell: React.FC<CodeCellProps> = ({ content, id, type }) => {
       const output = await bundle(content);
 
       setCode(output.code);
-      setError(output.err);
+      setError(output.error);
     }, 1000);
 
     return () => {

@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 import CellList from "./components/CellList";
 import { store } from "./state";
 
-const App = () => {
+const App: React.FC = () => {
   return (
     <Provider store={store}>
       <div>
