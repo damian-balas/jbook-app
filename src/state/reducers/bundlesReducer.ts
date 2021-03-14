@@ -3,11 +3,13 @@ import { ACTION_TYPE } from "../action-types";
 import { Action } from "../actions";
 
 type BundlesState = {
-  [key: string]: {
-    bundling: boolean;
-    code: string;
-    error: string;
-  };
+  [key: string]:
+    | {
+        bundling: boolean;
+        code: string;
+        error: string;
+      }
+    | undefined;
 };
 
 const INITIAL_STATE: BundlesState = {};
