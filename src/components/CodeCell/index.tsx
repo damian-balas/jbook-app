@@ -1,33 +1,21 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import CodeEditor from "../CodeEditor";
 import Preview from "../Preview";
 
-import bundle from "../../bundler";
 import Resizable from "../Resizable";
 
 import styles from "./CodeCell.module.scss";
 import { Cell } from "../../state";
 import { useActions } from "../../hooks/useActions";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
+import { useCumulativeCode } from "../../hooks/useCumulativeCode";
 
 type CodeCellProps = Cell;
 
 const CodeCell: React.FC<CodeCellProps> = ({ content, id, type }) => {
-  const [code, setCode] = useState("");
-  const [error, setError] = useState("");
-  const { updateCell } = useActions();
-
-  useEffect(() => {
-    const timer = setTimeout(async () => {
-      const output = await bundle(content);
-
-      setCode(output.code);
-      setError(output.error);
-    }, 1000);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [content]);
+  const { updateCell, createBundle } = useActions();
+  const bundle = useTypedSelector(({ bundles: { [id]: bundle } }) => bundle);
+  const cumulativeCode = useCumulativeCode(id);
 
   const onChangeHandler = useCallback(
     (value: string) => {
@@ -36,13 +24,38 @@ const CodeCell: React.FC<CodeCellProps> = ({ content, id, type }) => {
     [updateCell, id],
   );
 
+  useEffect(() => {
+    if (!cumulativeCode) {
+      createBundle(id, cumulativeCode);
+      return;
+    }
+
+    const timer = setTimeout(async () => {
+      createBundle(id, cumulativeCode);
+    }, 1000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [id, createBundle, cumulativeCode]);
+
   return (
     <Resizable direction="vertical">
       <div className={styles["code-cell"]}>
         <Resizable direction="horizontal">
           <CodeEditor initialValue={content} onChange={onChangeHandler} />
         </Resizable>
-        <Preview code={code} bundleErrorMessage={error} />
+        <div className={styles.preview__wrapper}>
+          {!bundle || bundle.bundling ? (
+            <div className={styles["progress__wrapper"]}>
+              <progress className="progress is-small is-primary" max="100">
+                Loading
+              </progress>
+            </div>
+          ) : (
+            <Preview code={bundle.code} bundleErrorMessage={bundle.error} />
+          )}
+        </div>
       </div>
     </Resizable>
   );
