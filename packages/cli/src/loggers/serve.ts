@@ -6,8 +6,8 @@ export function logInfoAfterServe(filename: string, port: string) {
     chalk`
 {yellow.bold ${filename}} - To edit the file, please navigate to:
 
-  {green.bold http://localhost:${port}} 
-  {green.bold http://${getLocalIp()}:${port}}
+    Local:              {green.bold http://localhost:${port}} 
+    On Your Network:    {green.bold http://${getLocalIp()}:${port}}
     `,
   );
 }
