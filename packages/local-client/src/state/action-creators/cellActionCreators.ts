@@ -1,12 +1,36 @@
-import { CellTypes } from "../cell";
+import { Dispatch } from "redux";
+import axios from "axios";
+import { Cell, CellTypes } from "../cell";
+import { RootState } from "../reducers/index";
 import {
   Direction,
   UpdateCellAction,
   MoveCellAction,
   InsertCellAfterAction,
   DeleteCellAction,
+  Action,
 } from "../actions";
 import { ACTION_TYPE } from "../action-types";
+
+export const fetchCells = () => {
+  return async (dispatch: Dispatch<Action>) => {
+    dispatch({ type: ACTION_TYPE.FETCH_CELLS });
+
+    try {
+      const { data }: { data: Cell[] } = await axios.get("/cells");
+
+      dispatch({
+        type: ACTION_TYPE.FETCH_CELLS_COMPLETE,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ACTION_TYPE.FETCH_CELLS_ERROR,
+        payload: error.message,
+      });
+    }
+  };
+};
 
 export const updateCell = (id: string, content: string): UpdateCellAction => {
   return {
@@ -45,5 +69,24 @@ export const insertCellAfter = (
       id,
       type: cellType,
     },
+  };
+};
+
+export const saveCells = () => {
+  return async (dispatch: Dispatch<Action>, getState: () => RootState) => {
+    const {
+      cells: { data, order },
+    } = getState();
+
+    const cells = order.map((id) => data[id]);
+
+    try {
+      await axios.post("/cells", { cells });
+    } catch (error) {
+      dispatch({
+        type: ACTION_TYPE.SAVE_CELLS_ERROR,
+        payload: error.message,
+      });
+    }
   };
 };

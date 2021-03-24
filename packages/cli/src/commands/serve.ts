@@ -7,6 +7,8 @@ type Options = {
   port: string;
 };
 
+const isProduction = process.env.NODE_ENV === "production";
+
 export const serveCommand = new Command()
   .command("serve [filename]")
   .description("Open a file for editing")
@@ -14,7 +16,12 @@ export const serveCommand = new Command()
   .action(async (filename = "notebook.js", options: Options) => {
     try {
       const dir = path.join(process.cwd(), path.dirname(filename));
-      await serve(Number(options.port), path.basename(filename), dir);
+      await serve(
+        Number(options.port),
+        path.basename(filename),
+        dir,
+        !isProduction,
+      );
       logInfoAfterServe(filename, options.port);
     } catch (error) {
       if (error.code === "EADDRINUSE") {
