@@ -25,7 +25,6 @@ export const serve = (
     const packagePath = require.resolve(
       "@dbalasnote/local-client/build/index.html",
     );
-
     app.use(express.static(path.dirname(packagePath)));
   }
 
