@@ -1,6 +1,6 @@
 {
   "name": "dbalasnote",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "bin": "dist/index.js",
   "publishConfig": {
@@ -16,10 +16,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@dbalasnote/local-client": "^1.0.0"
+    "@dbalasnote/local-client": "^1.0.1"
   },
   "devDependencies": {
-    "@dbalasnote/local-api": "^1.0.0",
+    "@dbalasnote/local-api": "^1.0.1",
     "@types/node": "^14.14.35",
     "chalk": "^4.1.0",
     "commander": "^7.1.0",
