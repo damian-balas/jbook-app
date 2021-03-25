@@ -1,5 +1,5 @@
 {
-  "name": "d-note",
+  "name": "dbalasnote",
   "version": "1.0.0",
   "description": "",
   "bin": "dist/index.js",
@@ -16,10 +16,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@d-note/local-client": "^1.0.0"
+    "@dbalasnote/local-client": "^1.0.0"
   },
   "devDependencies": {
-    "@d-note/local-api": "^1.0.0",
+    "@dbalasnote/local-api": "^1.0.0",
     "@types/node": "^14.14.35",
     "chalk": "^4.1.0",
     "commander": "^7.1.0",
