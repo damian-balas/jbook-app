@@ -1,6 +1,6 @@
 import path from "path";
 import { Command } from "commander";
-import { serve } from "@d-note/local-api";
+import { serve } from "@dbalasnote/local-api";
 import { logInfoAfterServe } from "../loggers/serve";
 
 type Options = {
